@@ -62,7 +62,280 @@ const restaurant = {
     console.log(otherIngredients);
   },
 };
+
+///////////////////////////////////////////
+// Working With Strings - Part 3
+
+// Split and join
+console.log('a+very+nice+string'.split('+'));
+console.log('Jonas Schmedtmann'.split(' '));
+
+const [firstName, LastName] = 'Jonas Schmedtmann'.split(' ');
+
+const newName = ['Mr.', firstName, LastName.toUpperCase()].join(' ');
+console.log(newName);
+
+const capitalizationName = function (name) {
+  const names = name.split(' ');
+  const namesUpper = [];
+
+  for (const n of names) {
+    namesUpper.push(n[0].toUpperCase() + n.slice(1));
+    // namesUpper.push(n.replace(n[0], n[0].toUpperCase())); Alternative
+  }
+  console.log(namesUpper.join(' '));
+};
+capitalizationName('jessica ann smith davis');
+capitalizationName('jonas schmedtmann');
+capitalizationName('chayanit kitmek');
+
+// Padding
+const message = 'Go to gate 23!';
+console.log(message.padStart(20, '+').padEnd(30, '+'));
+console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
+
+const maskCreditCard = function (number) {
+  const str = number + '';
+  const last = str.slice(-4);
+  return last.padStart(str.length, '*');
+};
+
+console.log(maskCreditCard(234261234));
+console.log(maskCreditCard(43234234234));
+console.log(maskCreditCard('32423423423'));
+
+//Repeat
+const message2 = 'Bad weather... All Departues Delayed... ';
+
+console.log(message2.repeat(5));
+
+const planceInLine = function (n) {
+  console.log(`There are ${n} planes in line ${'✈️'.repeat(n)}`);
+};
+
+planceInLine(5);
+planceInLine(3);
+planceInLine(12);
 /*
+///////////////////////////////////////////
+// Working With Strings - Part 2
+
+const airline = 'TAP Air Portugal';
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+// Fix capitalization in name
+const passenger = 'jOnAS'; // Jonas
+//make everything to lowercase
+const passengerLowercase = passenger.toLowerCase();
+//make first letter of passengerLowercase to Uppercase and put it back together with lowercase
+const passengerCorrect =
+  passengerLowercase[0].toLocaleUpperCase() + passengerLowercase.slice(1);
+console.log(passengerCorrect);
+
+// Comparing email
+const email = 'hello@jonas.io';
+const loginEmail = ' Hello@Jonas.Io \n';
+
+// // make loginEmail to lowercase
+// const lowerEmail = loginEmail.toLowerCase();
+
+// // make lowerEmail not have whitespace
+// const trimmedEmail = lowerEmail.trim();
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);
+
+// replacing
+const priceGB = '288,97$';
+const priceUS = priceGB.replace('$', '#').replace(',', '.');
+console.log(priceUS);
+
+const announcement =
+  'All passengers come to bording door 23. boarding door 23!';
+console.log(announcement.replace('door', 'gate'));
+// console.log(announcement.replaceAll('door', 'gate'));
+console.log(announcement.replace(/door/g, 'gate'));
+
+// Booleans
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320'));
+console.log(plane.includes('Boeing'));
+console.log(plane.startsWith('Airb'));
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of the NEW Airbus family');
+}
+
+// Practice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT allowed on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
+};
+
+checkBaggage('I have a laptop, some Food and a pocket Knife');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a a gun for protection');
+
+///////////////////////////////////////////
+// Working With Strings - Part 1
+
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(plane[2]);
+console.log('B737'[0]);
+
+console.log(airline.length);
+console.log('B737'.length);
+
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('portugal'));
+
+console.log(airline.slice(4, 7)); //lenght = end - start
+
+console.log(airline.slice(0, airline.indexOf(' ')));
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+console.log(airline.slice(-2));
+console.log(airline.slice(1, -1));
+console.log(airline.slice(-2));
+
+const checkMiddleSeat = function (seat) {
+  //B and E are middle seats
+  const s = seat.slice(-1);
+  let middleOrNot = s === 'B' || s === 'E' ? 'middle' : 'not middle';
+  console.log(`Your ${seat} are ${middleOrNot} seat!`);
+};
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+
+
+///////////////////////////////////////////
+// Maps:Iteration
+const question = new Map([
+  ['question', 'What is the best programming languate inthe world ?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correctttt 😭'],
+  [false, 'Try again!'],
+]);
+
+console.log(question);
+
+// Convert object to map
+console.log(Object.entries(openingHours));
+
+const hourMap = new Map(Object.entries(openingHours));
+
+console.log('==>', hourMap);
+
+//Quiz app
+console.log(question.get('question'));
+
+for (const [key, value] of question) {
+  if (typeof key === 'number') {
+    console.log(`Answer ${key}: ${value}`);
+  }
+}
+// const answer = Number(prompt('Your answer'));
+// console.log(typeof answer, typeof question.get('correct'));
+
+// console.log(question.get(answer === question.get('correct')));
+
+//convert map to array
+console.log([...question]);
+console.log([...question.entries()]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
+
+
+///////////////////////////////////////////
+// Maps: Fundamentals
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Itali');
+console.log(rest.set(2, 'Lisbon, Portugal'));
+
+rest
+  .set('catagories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are close :(');
+
+console.log(rest.get('name'));
+console.log(rest.get(true));
+
+const time = 8;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+console.log(rest.has('catagories'));
+rest.delete(2);
+// rest.clear();
+const arr = [1, 2];
+rest.set(arr, 'Test');
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
+
+console.log(rest.size);
+
+console.log(rest.get(arr));
+
+
+
+const orderSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+
+console.log(orderSet);
+
+console.log(new Set('Jonas'));
+
+console.log(orderSet.size);
+console.log(orderSet.has('Pizza'));
+console.log(orderSet.has('Bread'));
+
+orderSet.add('Garlic Bread');
+orderSet.add('Garlic Bread');
+
+orderSet.delete('Risotto');
+
+// orderSet.clear();
+console.log(orderSet);
+
+for (const order of orderSet) console.log(order);
+
+//Example
+
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+console.log(
+  new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size
+);
+
+console.log(new Set('jonasschmedtmann').size);
+
+console.log(new Set('chayanitkitmek').size);
+
 //property NAMES
 const properties = Object.keys(openingHours);
 console.log(properties);
