@@ -134,7 +134,7 @@ greet('hello')('jonas');
 const grat = greeting => name => console.log(`${greeting} ${name}`);
 
 grat('Hey')('jao');
-*/
+
 
 /////////////////////////////////////////////////////
 //The call and apply Methods
@@ -239,3 +239,212 @@ const addTaxRate2 = rate => value => value + value * rate;
 
 console.log(addTaxRate2(0.23)(100));
 console.log(addTaxRate2(0.23)(23));
+
+////////////////////////////////////////
+// Challenge #1
+//==============Solution by JAO =============
+//==============Solution by JAO =============
+const poll = {
+  question: 'What is your favourite programming language?',
+  options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+  // This generates [0, 0, 0, 0]. More in the next section!
+  answers: new Array(4).fill(0),
+  //1 create 'registerNewAnswer
+  registerNewAnswer() {
+    //1.1 display propt window
+    let ans = Number(
+      prompt(`${this.question}${pollChoiceLoop()}\n(Write option number !)`)
+    );
+    //1.2 upate answer array
+    if (ans > 4) {
+      ans = Number(
+        prompt(
+          `Wrong input try again!\n${
+            this.question
+          }${pollChoiceLoop()}\n(Write option number !)`
+        )
+      );
+    }
+
+    if (ans === 0 && ans < 4) {
+      this.answers[0] = this.answers[0] + 1;
+    } else if (ans === 1 && ans < 4) {
+      this.answers[1] = this.answers[1] + 1;
+    } else if (ans === 2 && ans < 4) {
+      this.answers[2] = this.answers[2] + 1;
+    } else if (ans === 3 && ans < 4) {
+      this.answers[3] = this.answers[3] + 1;
+    }
+
+    // 4
+    this.displayResults('string');
+  },
+  //3 create displayResults
+  displayResults(type = {}) {
+    if (typeof type === 'string') {
+      console.log(`Poll results are ${this.answers}`);
+    }
+    if (typeof type === 'object') {
+      console.log(this.answers);
+    }
+  },
+};
+
+const pollChoiceLoop = function () {
+  let pollChoiceAns;
+  for (const word of poll.options) {
+    pollChoiceAns = pollChoiceAns + `\n${word}`;
+  }
+  return pollChoiceAns;
+};
+
+//2
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+// poll.displayResults();
+//==============Solution by JAO =============
+//==============Solution by JAO =============
+
+//==============Solution by Jonas =============
+//==============Solution by Jonas=============
+const poll = {
+  question: 'What is your favourite programming language?',
+  options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+  // This generates [0, 0, 0, 0]. More in the next section!
+  answers: new Array(4).fill(0),
+  registerNewAnswer() {
+    // Get answer
+    const answer = Number(
+      prompt(
+        `${this.question}\n${this.options.join('\n')}\n(Write option number !))`
+      )
+    );
+    // Register answer
+    typeof answer === 'number' &&
+      answer < this.answers.length &&
+      this.answers[answer]++;
+
+    this.displayResults();
+    this.displayResults('string');
+  },
+  displayResults(type = 'array') {
+    if (type === 'array') {
+      console.log(this.answers);
+    } else if (type === 'string') {
+      console.log(`Poll results are ${this.answers.join(', ')}`);
+    }
+  },
+};
+
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+//   Data 1: [5, 2, 3]
+// § Data 2: [1, 5, 3, 9, 6, 1]
+
+poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
+poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
+
+
+////////////////////////////////////////
+// Immediately Invoked Function Expressions (IIFE)
+
+const runOnce = function () {
+  console.log('This wil never run again');
+};
+runOnce();
+
+//IIFE
+(function () {
+  console.log('This wil never run again');
+  const isPrivate = 23;
+})();
+// console.log(isPrivate);
+
+(() => console.log('This wil never run again'))();
+
+{
+  const isPrivate = 23;
+  var notPrivate = 46;
+}
+
+// console.log(isPrivate);
+console.log(notPrivate);
+
+
+////////////////////////////////////////
+// Clousres
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+console.dir(booker);
+booker();
+booker();
+booker();
+
+////////////////////////////////////////
+// Clousres Example
+//Example 1
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+g();
+f();
+console.dir(f);
+
+// Re-assigning f funcion
+h();
+f();
+console.dir(f);
+
+//Example 2
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding all ${n} passengers`);
+    console.log(`There are 3 group, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+const perGroup = 1000;
+
+boardPassengers(180, 3);
+*/
+
+////////////////////////////////////////
+// Challenge #2
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'red';
+
+  document.querySelector('body').addEventListener('click', function () {
+    header.style.color = 'blue';
+  });
+})();
