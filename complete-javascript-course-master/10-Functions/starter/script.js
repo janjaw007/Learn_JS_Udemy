@@ -436,7 +436,6 @@ const boardPassengers = function (n, wait) {
 const perGroup = 1000;
 
 boardPassengers(180, 3);
-*/
 
 ////////////////////////////////////////
 // Challenge #2
@@ -448,3 +447,4 @@ boardPassengers(180, 3);
     header.style.color = 'blue';
   });
 })();
+*/
