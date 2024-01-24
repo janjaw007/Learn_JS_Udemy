@@ -35,6 +35,54 @@ document.addEventListener('keydown', function (e) {
 
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
+
+console.log('select all html', document.documentElement);
+console.log('select head shtml', document.head);
+console.log('select body', document.body);
+
+const header = document.querySelector('.header');
+
+const allSections = document.querySelectorAll('.section');
+
+console.log('all sections', allSections);
+
+document.getElementById('section--1');
+
+const allButtons = document.getElementsByTagName('button');
+
+console.log('all buttons', allButtons);
+
+document.getElementsByClassName('btn');
+
+//Creating and inserting elements
+// insertAdjacentHTML
+
+const message = document.createElement('div');
+
+message.classList.add('cookie-message'); // look at style.css
+message.textContent =
+  'We use cookied for improved functionality and analytics.';
+message.innerHTML =
+  'We use cookied for improved functionality and analytics. <button class="btn btn--close-cookie">Got it! </button>';
+
+// Insert to header class
+//header.prepend(message); //prepend add element as firstchild
+header.append(message); // append add element as lastchild
+
+//header.append(message.cloneNode(true)); //clone
+
+//header.before(message); // add element before tag as same-level
+//header.after(message); // add element after tag as same-level
+
+//Delete elements
+
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    // message.remove();
+    message.parentElement.removeChild(message);
+  });
+
 /*
 //////////////////////////////////////////////////////////////////// Selecting, Creating, and Deleting Elements
 
