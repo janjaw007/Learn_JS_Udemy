@@ -1,12 +1,13 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+///////////////////////////////////////
+// Modal window
 
 const openModal = function (e) {
   e.preventDefault();
@@ -30,6 +31,82 @@ overlay.addEventListener('click', closeModal);
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
+  }
+});
+
+// Button Scrolling
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+
+  console.log(e.target.getBoundingClientRect());
+
+  console.log('Current scroll(X/Y)', window.pageXOffset, window.pageYOffset);
+
+  console.log(
+    'height/width viewport',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  //scrolling
+
+  // window.scrollTo(
+  //   s1coords.left + window.pageXOffset,
+  //   s1coords.top + window.pageYOffset
+  // );
+
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  //mordern way
+
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+////////////////////////////////////////////////////////////////////
+// Page Navigation
+
+// select all link element
+// document.querySelectorAll('.nav__link').forEach(
+//   // attach event to each element
+//   function (el) {
+//     el.addEventListener('click', function (e) {
+//       e.preventDefault(); // prevent #id <-- anchor to scroll to element
+
+//       // get element that has href attribute
+//       const id = this.getAttribute('href');
+
+//       // scroll into the element that has id same has href value
+//       document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//     });
+//   }
+// );
+
+// Event delegation
+
+// step 1 add event listener to common parent element
+// step 2 determine what element originated the event
+
+// parent element
+
+// add event to common parent
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  // originated the event
+  // console.log(e.target);
+
+  // Matching strategy
+  if (e.target.classList.contains('nav__link')) {
+    //  console.log('link');
+    e.preventDefault(); // prevent #id <-- anchor to scroll to element
+    // get element that has href attribute
+    const id = e.target.getAttribute('href');
+    // scroll into the element that has id same has href value
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
 
@@ -286,7 +363,7 @@ setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 // h1.onmouseenter = function (e) {
 //   alert('onmouseenter: Great! You are reading the heading :D');
 // };
-*/
+
 
 // rgb(255,255,255)
 
@@ -313,3 +390,4 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
   console.log('NAV', e.target, e.currentTarget);
 });
+*/
