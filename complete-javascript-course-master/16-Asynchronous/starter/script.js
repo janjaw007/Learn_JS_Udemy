@@ -9,20 +9,21 @@ const renderError = function (msg) {
 };
 
 const renderCountry = function (data, className = '') {
+  console.log('rederCountry', data);
   const htmlword = `
       <article class="country ${className}">
       <img class="country__img" src="${data.flags.png}" />
       <div class="country__data">
-        <h3 class="country__name">${data.name.common}</h3>
+        <h3 class="country__name">${data.name}</h3>
         <h4 class="country__region">${data.region}</h4>
         <p class="country__row"><span>👫</span>${(
           +data.population / 1000000
         ).toFixed(1)} people</p>
         <p class="country__row"><span>🗣️</span>${
-          data.languages[Object.keys(data.languages)[0]]
+          data.languages[Object.keys(data.languages)[0]].name
         }</p>
         <p class="country__row"><span>💰</span>${
-          data.currencies[Object.keys(data.currencies)[0]].name
+          data.currencies[Object.keys(data.currencies)[0]].code
         }</p>
       </div>
     </article>
@@ -136,20 +137,48 @@ const renderCountry = function (data, className = '') {
 //     });
 // };
 
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(respone => {
+    console.log(respone);
+
+    if (!respone.ok) throw new Error(`${errorMsg} ${respone.status}`);
+
+    return respone.json();
+  });
+};
+
 const getContunryData = function (country) {
   // country 1
-  fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(respone => respone.json())
+  // getJSON(`https://restcountries.com/v3.1/name/${country}`, 'Country not found')
+  getJSON(
+    `https://countries-api-836d.onrender.com/countries/name/${country}`,
+    'Country not found woy'
+  )
     .then(data => {
       renderCountry(data[0]);
-      const neighbours = [...data[0]?.borders];
+      // const neighbours = [...data[0]?.borders];
+      const neighbours = data[0].borders[0];
+      // const neighbours = ['adsadasdas', 'adsadasdas'];
 
-      neighbours.forEach(neighbour => {
-        // country 2
-        return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`)
-          .then(respone => respone.json())
-          .then(data => renderCountry(data[0], 'neighbour'));
+      if (!neighbours) throw new Error('No Neighbour found!');
+
+      // country 2
+      return getJSON(
+        `https://countries-api-836d.onrender.com/countries/alpha/${neighbours}`,
+        'Country neighbour not found woy'
+      ).then(data => {
+        renderCountry(data, 'neighbour');
       });
+
+      // neighbours.forEach(neighbour => {
+      //   // country 2
+      //   return getJSON(
+      //     `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`,
+      //     'Country neighbour not found woy'
+      //   ).then(data => {
+      //     renderCountry(data, 'neighbour');
+      //   });
+      // });
     })
     .catch(err => {
       console.error(`${err} ⚠️`);
@@ -160,8 +189,44 @@ const getContunryData = function (country) {
     });
 };
 
+// const getContunryData = function (country) {
+//   // country 1
+//   fetch(`https://restcountries.com/v3.1/name/${country}`)
+//     .then(respone => {
+//       console.log(respone);
+
+//       if (!respone.ok) throw new Error(`Country not found ${respone.status}`);
+
+//       return respone.json();
+//     })
+//     .then(data => {
+//       renderCountry(data[0]);
+//       // const neighbours = [...data[0]?.borders];
+//       const neighbours = ['adsadasdas', 'adsadasdas'];
+
+//       neighbours.forEach(neighbour => {
+//         // country 2
+//         return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`)
+//           .then(respone => {
+//             console.log(respone);
+//             if (!respone.ok)
+//               throw new Error(`Country not found ${respone.status}`);
+//             respone.json();
+//           })
+//           .then(data => renderCountry(data[0], 'neighbour'));
+//       });
+//     })
+//     .catch(err => {
+//       console.error(`${err} ⚠️`);
+//       renderError(`Something went wrong ⚠️⚠️ ${err.message}. Try Again!`);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
+
 btn.addEventListener('click', function () {
-  getContunryData('USA');
+  getContunryData('Australia');
 });
 
-getContunryData('Spasdfasasewqdain');
+// getContunryData('adsadasdas');
