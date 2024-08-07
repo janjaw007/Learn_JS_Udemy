@@ -258,6 +258,7 @@ TEST COORDINATES 2: -33.933, 18.474
 GOOD LUCK 😀
 */
 
+/*
 const whereAmI = function (lat, long) {
   let country;
   // fetch(
@@ -294,3 +295,47 @@ whereAmI(19.073, 72.873);
 whereAmI(-33.933, 18.474);
 
 // getContunryData(whereAmI(52.508, 13.381));
+*/
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lotter darw is happening 🔮');
+
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('You WIN 🤑');
+    } else {
+      reject(new Error('You lost your money 🥲'));
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// Promisifying setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(1)
+  .then(() => {
+    console.log('1 second pass');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('2 second pass');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('3 second pass');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('4 second pass');
+  });
+
+Promise.resolve('Resloved Imediallty').then(res => console.log(res));
+Promise.reject(new Error('Rejected Imediallty')).catch(res =>
+  console.error(res)
+);
