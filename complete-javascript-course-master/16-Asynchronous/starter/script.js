@@ -30,7 +30,7 @@ const renderCountry = function (data, className = '') {
       `;
 
   countriesContainer.insertAdjacentHTML('beforeend', htmlword);
-  //countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 ///////////////////////////////////////
@@ -349,7 +349,7 @@ Promise.reject(new Error('Rejected Imediallty')).catch(res =>
 //   position => console.log(position),
 //   err => console.err(err)
 // );
-
+/*
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     // navigator.geolocation.getCurrentPosition(
@@ -394,4 +394,48 @@ const whereAmI = function (lat, long) {
     });
 };
 
-btn.addEventListener('click', whereAmI);
+btn.addEventListener('click', whereAmI);*/
+
+// fn keep runging in the background
+// when done it return a promise
+
+// fetch(
+//   `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}`
+// );
+// fetch(
+//   `https://countries-api-836d.onrender.com/countries/name/${country}`
+// ).then(res=>console.log(res))
+
+// await statement
+// await need promise
+// await stop code excudetion until it fullfilled
+// await dont block call stack if it async function
+// syntatix sugar
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async function () {
+  //getPosition
+  const pos = await getPosition();
+  const { latitude: lat, longitude: long } = pos.coords;
+
+  const resPosition = await fetch(
+    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}`
+  );
+
+  const dataPosition = await resPosition.json();
+
+  const res = await fetch(
+    `https://countries-api-836d.onrender.com/countries/name/${dataPosition.countryName}`
+  );
+  const data = await res.json();
+
+  renderCountry(data[0]);
+};
+
+whereAmI();
+console.log('FIRST');
