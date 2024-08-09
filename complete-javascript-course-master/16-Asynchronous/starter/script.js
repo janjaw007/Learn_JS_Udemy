@@ -5,7 +5,7 @@ const countriesContainer = document.querySelector('.countries');
 
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
-  //countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 const renderCountry = function (data, className = '') {
@@ -419,23 +419,40 @@ const getPosition = function () {
 };
 
 const whereAmI = async function () {
-  //getPosition
+  try{
+    //getPosition
   const pos = await getPosition();
   const { latitude: lat, longitude: long } = pos.coords;
 
   const resPosition = await fetch(
     `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}`
   );
+  if(!resPosition.ok) throw new Error('Problem getting location data')
 
   const dataPosition = await resPosition.json();
 
   const res = await fetch(
     `https://countries-api-836d.onrender.com/countries/name/${dataPosition.countryName}`
   );
+  if(!res.ok) throw new Error('Problem getting Country')
+
   const data = await res.json();
 
   renderCountry(data[0]);
+  }catch(err){
+    console.error(`${err}😂`);
+    renderError(` ${err.message}`)
+  }
 };
 
 whereAmI();
 console.log('FIRST');
+
+
+// try {
+//   let y=1;
+//   const x=2;
+//   y=3
+// }catch(err){
+//   alert(err.message)
+// }
