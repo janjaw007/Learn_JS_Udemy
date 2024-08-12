@@ -9,7 +9,7 @@ const renderError = function (msg) {
 };
 
 const renderCountry = function (data, className = '') {
-  console.log('rederCountry', data);
+  // console.log('rederCountry', data);
   const htmlword = `
       <article class="country ${className}">
       <img class="country__img" src="${data.flags.png}" />
@@ -412,6 +412,8 @@ btn.addEventListener('click', whereAmI);*/
 // await dont block call stack if it async function
 // syntatix sugar
 
+
+/*
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -425,6 +427,7 @@ const whereAmI = async function () {
   const { latitude: lat, longitude: long } = pos.coords;
 
   const resPosition = await fetch(
+    // `https://api.bigdatacloud.net/data/rever-geocode-client?latitude=${lat}&longitude=${long}`
     `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}`
   );
   if(!resPosition.ok) throw new Error('Problem getting location data')
@@ -437,17 +440,36 @@ const whereAmI = async function () {
   if(!res.ok) throw new Error('Problem getting Country')
 
   const data = await res.json();
-
   renderCountry(data[0]);
+
+  return `You are in ${dataPosition.city}, ${dataPosition.countryName}`
   }catch(err){
     console.error(`${err}😂`);
     renderError(` ${err.message}`)
+
+    // Rejecr promise returned from async functon
+    throw err;
   }
 };
 
-whereAmI();
-console.log('FIRST');
+console.log('1: Will Get locaaion');
+// const city = whereAmI();
+// console.log(city)
 
+// whereAmI()
+// .then(city => console.log(`2: ${city}`))
+// .catch(err => console.error(`2: ${err.message}`))
+// .finally(()=>console.log('3: Finished getting location'))
+
+(async function () {
+  try {
+     const city = await whereAmI()
+     console.log(`2: ${city}`)
+  } catch (error) {
+    console.error(`2: ${err.message}`)
+  }
+  console.log('3: Finished getting location')
+})();
 
 // try {
 //   let y=1;
@@ -455,4 +477,4 @@ console.log('FIRST');
 //   y=3
 // }catch(err){
 //   alert(err.message)
-// }
+// }*/
