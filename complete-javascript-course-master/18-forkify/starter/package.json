@@ -1,0 +1,20 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Recipe application",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "Chayanit Kitmek",
+  "license": "ISC",
+  "dependencies": {
+    "core-js": "^3.39.0",
+    "fracty": "^1.0.12",
+    "parcel": "^2.13.3",
+    "regenerator-runtime": "^0.14.1"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.13.3"
+  }
+}
