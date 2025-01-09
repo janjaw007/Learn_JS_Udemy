@@ -6,9 +6,9 @@ import ResultView from './views/ResultView.js';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 // https://forkify-api.jonas.io
 
@@ -43,9 +43,8 @@ const controlSearchResults = async function () {
     // 2.) Load Result From Query
     await model.loadSearchResults(query);
 
-    // 3.) Render REsults
-    console.log(model.state.search.results);
-    ResultView.render(model.state.search.results);
+    // 3.) Render Results
+    ResultView.render(model.getSearchResultsPage());
   } catch (error) {
     console.log(error);
   }
