@@ -29,7 +29,7 @@ export default class View {
       // update chagned TEXT
       if (
         !newEl.isEqualNode(curEL) &&
-        newEl.firstChild.nodeValue.trim() !== ''
+        newEl.firstChild?.nodeValue.trim() !== ''
       ) {
         curEL.textContent = newEl.textContent;
       }
